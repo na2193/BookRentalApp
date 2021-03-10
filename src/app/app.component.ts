@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Book } from './book';
 import { BookService } from './book.service';
 
@@ -11,8 +11,32 @@ import { BookService } from './book.service';
 })
 export class AppComponent implements OnInit {
   public books: Book[];
+  public editBook: Book;
 
-  constructor(private bookService: BookService) { }
+  addNewBookForm = this.formBuilder.group({
+    bookName: ['', Validators.required],
+    authorLastName: ['', Validators.required],
+    authorFirstName: ['', Validators.required],
+    isbn: ['', [Validators.required, Validators.maxLength(15)]],
+    genre: ['', Validators.required],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    numInStock: ['', [Validators.required, Validators.maxLength(2)]],
+    imagePath: [''],
+  });
+
+  editBookForm = this.formBuilder.group({
+    bookName: ['', Validators.required],
+    authorLastName: ['', Validators.required],
+    authorFirstName: ['', Validators.required],
+    isbn: ['', [Validators.required, Validators.maxLength(15)]],
+    genre: ['', Validators.required],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    numInStock: ['', [Validators.required, Validators.maxLength(2)]],
+    imagePath: [''],
+  });
+
+
+  constructor(private bookService: BookService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getBooks();
@@ -30,13 +54,15 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onAddBook(addForm: NgForm): void {
-    document.getElementById('add-book-form').click();
-    this.bookService.addBook(addForm.value).subscribe(
+  public onAddBook(): void {
+    //document.getElementById('add-book-form').click(); - this was causing an issue so moved it inside the addBook, don't know why?
+    this.bookService.addBook(this.addNewBookForm.value).subscribe(
       (response: Book) => {
         console.log(response);
         this.getBooks();
-        addForm.reset();
+        this.addNewBookForm.reset();
+        document.getElementById('add-book-form').click();
+        // add a success popup message
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -44,9 +70,24 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public resetForm(addForm: NgForm): void {
-    addForm.reset();
+  public onUpdateBook(book: Book): void {
+    this.bookService.updateBook(book).subscribe(
+      (response: Book) => {
+        console.log(response);
+        this.getBooks();
+        this.addNewBookForm.reset();
+        //document.getElementById('add-book-form').click();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
+
+
+  public resetForm(addForm: FormGroup): void {
+      addForm.reset();
+   }
 
 
   public onOpenModal(book: Book, mode: string): void {
@@ -59,6 +100,10 @@ export class AppComponent implements OnInit {
       button.setAttribute('data-target', '#addBookModal');
     }
     if(mode === 'edit') {
+      this.editBook = book;
+      console.log('Book selected for edit -> \n');
+      console.log(this.editBook);
+      this.setValue();
       button.setAttribute('data-target', '#editBookModal');
     }
     if(mode === 'delete') {
@@ -66,6 +111,20 @@ export class AppComponent implements OnInit {
     }
     container.appendChild(button);
     button.click();
+  }
+
+  private setValue(): void {
+    this.editBookForm.setValue({
+      bookName: this.editBook.bookName,
+      authorLastName: this.editBook.authorLastName,
+      authorFirstName: this.editBook.authorFirstName,
+      isbn: this.editBook.isbn,
+      genre: this.editBook.genre,
+      description: this.editBook.description,
+      numInStock: this.editBook.numInStock,
+      imagePath: this.editBook.imagePath
+    });
+
   }
 
 

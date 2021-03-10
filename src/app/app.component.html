@@ -1,17 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" style="color:white;">Online Book Rental (Admin)</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+    aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarColor02">
-     <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-           <a class="nav-link btn btn-dark" (click)="onOpenModal(null, 'add')">Add Book <span class="sr-only">(current)</span></a>
-        </li>
-     </ul>
-     <form class="form-inline my-2 my-lg-0">
-        <input type="search" id="searchName" class="form-control mr-sm-2 " placeholder="Search books..." required>
-     </form>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link btn btn-dark" (click)="onOpenModal(null, 'add')">Add Book <span
+            class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input type="search" id="searchName" class="form-control mr-sm-2 " placeholder="Search books..." required>
+    </form>
   </div>
 </nav>
 
@@ -19,153 +21,275 @@
 <br>
 <br>
 <div class="container" id="main-container">
-<div class="col-md-12"> 
+  <div class="col-md-12">
     <div *ngFor="let book of books" class="card b-1 hover-shadow mb-20">
-        <div class="media card-body">
-            <div class="media-left pr-12">
-                <img class="avatar avatar-xl no-radius" src="\assets\images\{{book?.imagePath}}" onerror="this.src='/assets/images/NotAvailable.jpg';" alt="...">
-            </div>
-            <div class="media-body">
-                <div class="mb-2">
-                    <span class="fs-20 pr-16">{{book.bookName}}</span>
-                </div>
-
-                <div class="author">
-                    <small class="fs-16 fw-300 ls-1">{{book.authorFirstName}} {{book.authorLastName}}</small>
-                </div>  
-                
-                <div class="description">
-                    <div class="media-body text-left d-none d-md-block">
-                        <p>{{book.description}}</p>
-                    </div>
-                </div>
-            </div>
+      <div class="media card-body">
+        <div class="media-left pr-12">
+          <img class="avatar avatar-xl no-radius" src="\assets\images\{{book?.imagePath}}"
+            onerror="this.src='/assets/images/NotAvailable.jpg';" alt="...">
         </div>
-        
-        <footer class="card-footer flexbox align-items-center">
-            <div>
-                <strong>Genre: </strong>
-                <span>{{book.genre}}</span>
+        <div class="media-body">
+          <div class="mb-2">
+            <span class="fs-20 pr-16">{{book.bookName}}</span>
+          </div>
+
+          <div class="author">
+            <small class="fs-16 fw-300 ls-1">{{book.authorFirstName}} {{book.authorLastName}}</small>
+          </div>
+
+          <div class="description">
+            <div class="media-body text-left d-none d-md-block">
+              <p>{{book.description}}</p>
             </div>
-            <div>
-              <strong>ISBN: </strong>
-              <span>{{book.isbn}}</span>
-            </div>
-            <div class="card-hover-show">
-                <button class="btn btn-xs fs-10 btn-bold btn-primary no-click stock"data-toggle="modal" data-target="#modal-contact" >Num In Stock: {{book.numInStock}}</button>
-                <a (click)="onOpenModal(book, 'edit')" class="btn btn-xs fs-10 btn-bold btn-warning" href="#"><i class="fa fa-pencil"></i></a>
-                <a (click)="onOpenModal(book, 'delete')" class="btn btn-xs fs-10 btn-bold btn-danger" href="#"><i class="fa fa-times"></i></a>
-            </div>
-        </footer>
+          </div>
+        </div>
+      </div>
+
+      <footer class="card-footer flexbox align-items-center">
+        <div>
+          <strong>Genre: </strong>
+          <span>{{book.genre}}</span>
+        </div>
+        <div>
+          <strong>ISBN: </strong>
+          <span>{{book.isbn}}</span>
+        </div>
+        <div class="card-hover-show">
+          <button class="btn btn-xs fs-10 btn-bold btn-primary no-click stock" data-toggle="modal"
+            data-target="#modal-contact">Num In Stock: {{book.numInStock}}</button>
+          <a (click)="onOpenModal(book, 'edit')" class="btn btn-xs fs-10 btn-bold btn-warning" href="#"><i
+              class="fa fa-pencil"></i></a>
+          <a (click)="onOpenModal(book, 'delete')" class="btn btn-xs fs-10 btn-bold btn-danger" href="#"><i
+              class="fa fa-times"></i></a>
+        </div>
+      </footer>
     </div>
 
 
 
     <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-        </ul>
+      <ul class="pagination justify-content-center">
+        <li class="page-item active">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+      </ul>
     </nav>
     <br>
-</div>
+  </div>
 
 
 
-<!-- Add Modal -->
-<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Add Modal -->
+  <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add Book</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)">
-              <div class="form-group">
-                <label for="bookName">Title</label>
-                <input type="text" ngModel name="bookName" class="form-control" id="bookName" placeholder="Title" required>
-                <!-- <div *ngIf="bookName.invalid && (bookName.dirty || bookName.touched)" class="alert alert-danger">
 
-                  <div *ngIf="bookName.errors.required">
-                    Name is required.
-                  </div>
-                  <div *ngIf="bookName.errors.minlength">
-                    Name must be at least 4 characters long.
-                  </div>
-                  <div *ngIf="bookName.errors.forbiddenName">
-                    Name cannot be Bob.
-                </div> -->
-              </div>
-              <div class="form-group">
-                <label for="authorLastName">Author Last Name</label>
-                <input type="text" ngModel name="authorLastName" class="form-control" id="authorLastName" placeholder="Author Last Name" required>
-              </div>
-              <div class="form-group">
-                <label for="authorFirstName">Author First Name</label>
-                <input type="text" ngModel name="authorFirstName" class="form-control" id="authorFirstName" placeholder="Author Last Name" required>
-              </div>
-              <div class="form-group">
-                <label for="genre">Genre</label>
-                <input type="text" ngModel name="genre" class="form-control" id="genre" placeholder="Genre" required>
-              </div>
-              <div class="form-group">
-                <label for="description">Summary</label>
-                <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Summary" required>
-              </div>
-              <div class="form-group">
-                <label for="isbn">ISBN</label>
-                <input type="number" ngModel name="isbn" class="form-control" id="isbn" placeholder="ISBN" required>
-              </div>
-              <div class="form-group">
-                <label for="numInStock">Number In Stock</label>
-                <input type="number" ngModel name="numInStock" class="form-control" id="numInStock" placeholder="Number In Stock" required>
-              </div>
-              <div class="form-group">
-                <label for="imagePath">Image Name</label>
-                <input type="text" ngModel name="imagePath" class="form-control" id="imagePath" placeholder="Image Name">
-              </div>
+          <form [formGroup]="addNewBookForm" (ngSubmit)="onAddBook()">
+            <div class="form-group">
+              <label for="bookName">Title
+                <span class="text-danger" *ngIf="addNewBookForm.controls['bookName'].invalid && addNewBookForm.controls['bookName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="bookName" name="bookName" class="form-control" id="bookName" placeholder="Title" required>
+                <div *ngIf="addNewBookForm.controls['bookName'].invalid && (addNewBookForm.controls['bookName'].dirty || addNewBookForm.controls['bookName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['bookName'].errors.required">This field is required.</div>
+                </div>
+             </div>
+
+            <div class="form-group">
+              <label for="authorLastName">Author Last Name
+                <span class="text-danger" *ngIf="addNewBookForm.controls['authorLastName'].invalid && addNewBookForm.controls['authorLastName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="authorLastName" name="authorLastName" class="form-control" id="authorLastName" placeholder="Author Last Name" required>
+                <div *ngIf="addNewBookForm.controls['authorLastName'].invalid && (addNewBookForm.controls['authorLastName'].dirty || addNewBookForm.controls['authorLastName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['authorLastName'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="authorFirstName">Author First Name
+                <span class="text-danger" *ngIf="addNewBookForm.controls['authorFirstName'].invalid && addNewBookForm.controls['authorFirstName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="authorFirstName" name="authorFirstName" class="form-control" id="authorFirstName" placeholder="Author Last Name" required>
+                <div *ngIf="addNewBookForm.controls['authorFirstName'].invalid && (addNewBookForm.controls['authorFirstName'].dirty || addNewBookForm.controls['authorFirstName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['authorFirstName'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="genre">Genre 
+                <span class="text-danger" *ngIf="addNewBookForm.controls['genre'].invalid && addNewBookForm.controls['genre'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="genre" name="genre" class="form-control" id="genre" placeholder="Genre" required>
+                <div *ngIf="addNewBookForm.controls['genre'].invalid && (addNewBookForm.controls['genre'].dirty || addNewBookForm.controls['genre'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['genre'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Summary
+                <span class="text-danger" *ngIf="addNewBookForm.controls['description'].invalid && addNewBookForm.controls['description'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="description" name="description" class="form-control" id="description" placeholder="Summary" maxlength="501" required>
+                <div *ngIf="addNewBookForm.controls['description'].invalid && (addNewBookForm.controls['description'].dirty || addNewBookForm.controls['description'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['description'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['description'].errors.maxlength">Description has a maxlenght of 500 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="isbn">ISBN
+                <span class="text-danger" *ngIf="addNewBookForm.controls['isbn'].invalid && addNewBookForm.controls['isbn'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="isbn" name="isbn" class="form-control" id="isbn" placeholder="ISBN" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="16" required>
+                <div *ngIf="addNewBookForm.controls['isbn'].invalid && (addNewBookForm.controls['isbn'].dirty || addNewBookForm.controls['isbn'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['isbn'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['isbn'].errors.maxlength">ISBN has a maxlenght of 15 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="numInStock">Number In Stock
+                <span class="text-danger" *ngIf="addNewBookForm.controls['numInStock'].invalid && addNewBookForm.controls['numInStock'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="numInStock" name="numInStock" class="form-control" id="numInStock" placeholder="Number In Stock" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3" required>
+                <div *ngIf="addNewBookForm.controls['numInStock'].invalid && (addNewBookForm.controls['numInStock'].dirty || addNewBookForm.controls['numInStock'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.maxlength">Number in Stock has a maxlenght of 2 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="imagePath">Image Name</label>
+              <input type="text" formControlName="imagePath" name="imagePath" class="form-control" id="imagePath" placeholder="Image Name">
+            </div>
 
             <div class="modal-footer">
-              <button (click)="resetForm(addForm)" type="button" id="add-book-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save changes</button>
+              <button class="btn btn-danger" type="reset">Reset</button>
+              <button (click)="resetForm(addNewBookForm)" type="button" id="add-book-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addNewBookForm.invalid" type="submit" class="btn btn-primary">Save changes</button>
             </div>
-        </form>
-      </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Book</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+
+          <form [formGroup]="editBookForm" >
+            <div class="form-group">
+              <label for="bookName">Title
+                <span class="text-danger" *ngIf="addNewBookForm.controls['bookName'].invalid && addNewBookForm.controls['bookName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="bookName" name="bookName" class="form-control" id="bookName" placeholder="Title" required>
+                <div *ngIf="addNewBookForm.controls['bookName'].invalid && (addNewBookForm.controls['bookName'].dirty || addNewBookForm.controls['bookName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['bookName'].errors.required">This field is required.</div>
+                </div>
+             </div>
+
+            <div class="form-group">
+              <label for="authorLastName">Author Last Name
+                <span class="text-danger" *ngIf="addNewBookForm.controls['authorLastName'].invalid && addNewBookForm.controls['authorLastName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="authorLastName" name="authorLastName" class="form-control" id="authorLastName" placeholder="Author Last Name" required>
+                <div *ngIf="addNewBookForm.controls['authorLastName'].invalid && (addNewBookForm.controls['authorLastName'].dirty || addNewBookForm.controls['authorLastName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['authorLastName'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="authorFirstName">Author First Name
+                <span class="text-danger" *ngIf="addNewBookForm.controls['authorFirstName'].invalid && addNewBookForm.controls['authorFirstName'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="authorFirstName" name="authorFirstName" class="form-control" id="authorFirstName" placeholder="Author Last Name" required>
+                <div *ngIf="addNewBookForm.controls['authorFirstName'].invalid && (addNewBookForm.controls['authorFirstName'].dirty || addNewBookForm.controls['authorFirstName'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['authorFirstName'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="genre">Genre 
+                <span class="text-danger" *ngIf="addNewBookForm.controls['genre'].invalid && addNewBookForm.controls['genre'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="genre" name="genre" class="form-control" id="genre" placeholder="Genre" required>
+                <div *ngIf="addNewBookForm.controls['genre'].invalid && (addNewBookForm.controls['genre'].dirty || addNewBookForm.controls['genre'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['genre'].errors.required">This field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Summary
+                <span class="text-danger" *ngIf="addNewBookForm.controls['description'].invalid && addNewBookForm.controls['description'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="description" name="description" class="form-control" id="description" placeholder="Summary" maxlength="501" required>
+                <div *ngIf="addNewBookForm.controls['description'].invalid && (addNewBookForm.controls['description'].dirty || addNewBookForm.controls['description'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['description'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['description'].errors.maxlength">Description has a maxlenght of 500 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="isbn">ISBN
+                <span class="text-danger" *ngIf="addNewBookForm.controls['isbn'].invalid && addNewBookForm.controls['isbn'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="isbn" name="isbn" class="form-control" id="isbn" placeholder="ISBN" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="16" required>
+                <div *ngIf="addNewBookForm.controls['isbn'].invalid && (addNewBookForm.controls['isbn'].dirty || addNewBookForm.controls['isbn'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['isbn'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['isbn'].errors.maxlength">ISBN has a maxlenght of 15 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="numInStock">Number In Stock
+                <span class="text-danger" *ngIf="addNewBookForm.controls['numInStock'].invalid && addNewBookForm.controls['numInStock'].errors.required">*</span>
+              </label>
+              <input type="text" formControlName="numInStock" name="numInStock" class="form-control" id="numInStock" placeholder="Number In Stock" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3" required>
+                <div *ngIf="addNewBookForm.controls['numInStock'].invalid && (addNewBookForm.controls['numInStock'].dirty || addNewBookForm.controls['numInStock'].touched)" class="text-danger">    
+                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.required">This field is required.</div>
+                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.maxlength">Number in Stock has a maxlenght of 2 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="imagePath">Image Name</label>
+              <input type="text" formControlName="imagePath" name="imagePath" class="form-control" id="imagePath" placeholder="Image Name">
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-danger" type="reset">Reset</button>
+              <button (click)="resetForm(addNewBookForm)" type="button" id="add-book-form" class="btn btn-secondary"data-dismiss="modal">Close</button>
+              <button (click)="onUpdateBook(addNewBookForm.value)" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Delete Modal -->
-<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
