@@ -208,3 +208,9 @@ small, time, .small {
     margin-top: -8px;
 }
 
+.toast-top-center { 
+    top: 30px;   
+    margin: 0 auto;   
+    left: 50%;   
+    margin-left: -150px;
+}

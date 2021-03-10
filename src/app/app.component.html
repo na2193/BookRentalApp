@@ -12,7 +12,8 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input type="search" id="searchName" class="form-control mr-sm-2 " placeholder="Search books..." required>
+      <input type="search" (ngModelChange)="searchBooks(key.value)" #key="ngModel" ngModel name="key" id="searchName" class="form-control mr-sm-2" 
+          placeholder="Search books..." required>
     </form>
   </div>
 </nav>
@@ -66,7 +67,7 @@
     </div>
 
 
-
+    <!-- NEED TO WORK ON THIS NEXT -->
     <nav>
       <ul class="pagination justify-content-center">
         <li class="page-item active">
@@ -190,7 +191,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Book</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Book: {{editBookName}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -199,75 +200,76 @@
 
           <form [formGroup]="editBookForm" >
             <div class="form-group">
+              <input type="hidden" name="id" class="form-control" id="id" placeholder="ID">
               <label for="bookName">Title
-                <span class="text-danger" *ngIf="addNewBookForm.controls['bookName'].invalid && addNewBookForm.controls['bookName'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['bookName'].invalid && editBookForm.controls['bookName'].errors.required">*</span>
               </label>
               <input type="text" formControlName="bookName" name="bookName" class="form-control" id="bookName" placeholder="Title" required>
-                <div *ngIf="addNewBookForm.controls['bookName'].invalid && (addNewBookForm.controls['bookName'].dirty || addNewBookForm.controls['bookName'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['bookName'].errors.required">This field is required.</div>
+                <div *ngIf="editBookForm.controls['bookName'].invalid && (editBookForm.controls['bookName'].dirty || editBookForm.controls['bookName'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['bookName'].errors.required">This field is required.</div>
                 </div>
              </div>
 
             <div class="form-group">
               <label for="authorLastName">Author Last Name
-                <span class="text-danger" *ngIf="addNewBookForm.controls['authorLastName'].invalid && addNewBookForm.controls['authorLastName'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['authorLastName'].invalid && editBookForm.controls['authorLastName'].errors.required">*</span>
               </label>
               <input type="text" formControlName="authorLastName" name="authorLastName" class="form-control" id="authorLastName" placeholder="Author Last Name" required>
-                <div *ngIf="addNewBookForm.controls['authorLastName'].invalid && (addNewBookForm.controls['authorLastName'].dirty || addNewBookForm.controls['authorLastName'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['authorLastName'].errors.required">This field is required.</div>
+                <div *ngIf="editBookForm.controls['authorLastName'].invalid && (editBookForm.controls['authorLastName'].dirty || editBookForm.controls['authorLastName'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['authorLastName'].errors.required">This field is required.</div>
                 </div>
             </div>
 
             <div class="form-group">
               <label for="authorFirstName">Author First Name
-                <span class="text-danger" *ngIf="addNewBookForm.controls['authorFirstName'].invalid && addNewBookForm.controls['authorFirstName'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['authorFirstName'].invalid && editBookForm.controls['authorFirstName'].errors.required">*</span>
               </label>
               <input type="text" formControlName="authorFirstName" name="authorFirstName" class="form-control" id="authorFirstName" placeholder="Author Last Name" required>
-                <div *ngIf="addNewBookForm.controls['authorFirstName'].invalid && (addNewBookForm.controls['authorFirstName'].dirty || addNewBookForm.controls['authorFirstName'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['authorFirstName'].errors.required">This field is required.</div>
+                <div *ngIf="editBookForm.controls['authorFirstName'].invalid && (editBookForm.controls['authorFirstName'].dirty || editBookForm.controls['authorFirstName'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['authorFirstName'].errors.required">This field is required.</div>
                 </div>
             </div>
 
             <div class="form-group">
               <label for="genre">Genre 
-                <span class="text-danger" *ngIf="addNewBookForm.controls['genre'].invalid && addNewBookForm.controls['genre'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['genre'].invalid && editBookForm.controls['genre'].errors.required">*</span>
               </label>
               <input type="text" formControlName="genre" name="genre" class="form-control" id="genre" placeholder="Genre" required>
-                <div *ngIf="addNewBookForm.controls['genre'].invalid && (addNewBookForm.controls['genre'].dirty || addNewBookForm.controls['genre'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['genre'].errors.required">This field is required.</div>
+                <div *ngIf="editBookForm.controls['genre'].invalid && (editBookForm.controls['genre'].dirty || editBookForm.controls['genre'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['genre'].errors.required">This field is required.</div>
                 </div>
             </div>
 
             <div class="form-group">
               <label for="description">Summary
-                <span class="text-danger" *ngIf="addNewBookForm.controls['description'].invalid && addNewBookForm.controls['description'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['description'].invalid && editBookForm.controls['description'].errors.required">*</span>
               </label>
               <input type="text" formControlName="description" name="description" class="form-control" id="description" placeholder="Summary" maxlength="501" required>
-                <div *ngIf="addNewBookForm.controls['description'].invalid && (addNewBookForm.controls['description'].dirty || addNewBookForm.controls['description'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['description'].errors.required">This field is required.</div>
-                  <div *ngIf="addNewBookForm.controls['description'].errors.maxlength">Description has a maxlenght of 500 characters</div>
+                <div *ngIf="editBookForm.controls['description'].invalid && (editBookForm.controls['description'].dirty || editBookForm.controls['description'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['description'].errors.required">This field is required.</div>
+                  <div *ngIf="editBookForm.controls['description'].errors.maxlength">Description has a maxlenght of 500 characters</div>
                 </div>
             </div>
 
             <div class="form-group">
               <label for="isbn">ISBN
-                <span class="text-danger" *ngIf="addNewBookForm.controls['isbn'].invalid && addNewBookForm.controls['isbn'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['isbn'].invalid && editBookForm.controls['isbn'].errors.required">*</span>
               </label>
               <input type="text" formControlName="isbn" name="isbn" class="form-control" id="isbn" placeholder="ISBN" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="16" required>
-                <div *ngIf="addNewBookForm.controls['isbn'].invalid && (addNewBookForm.controls['isbn'].dirty || addNewBookForm.controls['isbn'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['isbn'].errors.required">This field is required.</div>
-                  <div *ngIf="addNewBookForm.controls['isbn'].errors.maxlength">ISBN has a maxlenght of 15 characters</div>
+                <div *ngIf="editBookForm.controls['isbn'].invalid && (editBookForm.controls['isbn'].dirty || editBookForm.controls['isbn'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['isbn'].errors.required">This field is required.</div>
+                  <div *ngIf="editBookForm.controls['isbn'].errors.maxlength">ISBN has a maxlenght of 15 characters</div>
                 </div>
             </div>
 
             <div class="form-group">
               <label for="numInStock">Number In Stock
-                <span class="text-danger" *ngIf="addNewBookForm.controls['numInStock'].invalid && addNewBookForm.controls['numInStock'].errors.required">*</span>
+                <span class="text-danger" *ngIf="editBookForm.controls['numInStock'].invalid && editBookForm.controls['numInStock'].errors.required">*</span>
               </label>
               <input type="text" formControlName="numInStock" name="numInStock" class="form-control" id="numInStock" placeholder="Number In Stock" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3" required>
-                <div *ngIf="addNewBookForm.controls['numInStock'].invalid && (addNewBookForm.controls['numInStock'].dirty || addNewBookForm.controls['numInStock'].touched)" class="text-danger">    
-                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.required">This field is required.</div>
-                  <div *ngIf="addNewBookForm.controls['numInStock'].errors.maxlength">Number in Stock has a maxlenght of 2 characters</div>
+                <div *ngIf="editBookForm.controls['numInStock'].invalid && (editBookForm.controls['numInStock'].dirty || editBookForm.controls['numInStock'].touched)" class="text-danger">    
+                  <div *ngIf="editBookForm.controls['numInStock'].errors.required">This field is required.</div>
+                  <div *ngIf="editBookForm.controls['numInStock'].errors.maxlength">Number in Stock has a maxlenght of 2 characters</div>
                 </div>
             </div>
 
@@ -278,8 +280,8 @@
 
             <div class="modal-footer">
               <button class="btn btn-danger" type="reset">Reset</button>
-              <button (click)="resetForm(addNewBookForm)" type="button" id="add-book-form" class="btn btn-secondary"data-dismiss="modal">Close</button>
-              <button (click)="onUpdateBook(addNewBookForm.value)" type="submit" class="btn btn-primary">Save changes</button>
+              <button (click)="resetForm(editBookForm)" type="button" id="edit-book-form" class="btn btn-secondary"data-dismiss="modal">Close</button>
+              <button (click)="onUpdateBook(editBookForm.value)" [disabled]="editBookForm.invalid" type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
         </div>
@@ -288,24 +290,31 @@
   </div>
 
   <!-- Delete Modal -->
-  <div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
+          <button type="button" class="close" id="delete-book-form" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          ...
+            <p>Are you sure you want to delete the book: <b>{{deleteBookName}}</b>?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button (click)="onDeleteBook(deleteBook.id)" type="button" class="btn btn-danger">Yes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Notification for no books -->
+  <div *ngIf="books?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="aler alert-light" role="alert">
+      <h4 class="alert-heading">No Books!</h4>
+      <p>No Books were found.</p>
     </div>
   </div>
 

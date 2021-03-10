@@ -47,10 +47,16 @@ export class BookService {
     }
 
     public updateBook(book: Book): Observable<Book> {
-        return this.http.put<Book>(`${this.apiServerURL}/api/book/update`, book);
+        return this.http.put<Book>(`${this.apiServerURL}/api/book/update`, book)
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     public deleteBook(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiServerURL}/api/book/delete/${id}`);
+        return this.http.delete<void>(`${this.apiServerURL}/api/book/delete/${id}`)
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 }

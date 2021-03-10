@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Book } from './book';
 import { BookService } from './book.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,9 @@ import { BookService } from './book.service';
 export class AppComponent implements OnInit {
   public books: Book[];
   public editBook: Book;
+  public deleteBook: Book;
+  public deleteBookName: string;
+  public editBookName: string;
 
   addNewBookForm = this.formBuilder.group({
     bookName: ['', Validators.required],
@@ -25,6 +29,7 @@ export class AppComponent implements OnInit {
   });
 
   editBookForm = this.formBuilder.group({
+    id: [''],
     bookName: ['', Validators.required],
     authorLastName: ['', Validators.required],
     authorFirstName: ['', Validators.required],
@@ -35,11 +40,11 @@ export class AppComponent implements OnInit {
     imagePath: [''],
   });
 
-
-  constructor(private bookService: BookService, private formBuilder: FormBuilder) { }
+  constructor(private bookService: BookService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getBooks();
+    this.toastr.toastrConfig.positionClass = 'toast-top-center';
   }
 
   public getBooks(): void {
@@ -55,14 +60,14 @@ export class AppComponent implements OnInit {
   }
 
   public onAddBook(): void {
-    //document.getElementById('add-book-form').click(); - this was causing an issue so moved it inside the addBook, don't know why?
     this.bookService.addBook(this.addNewBookForm.value).subscribe(
       (response: Book) => {
         console.log(response);
         this.getBooks();
         this.addNewBookForm.reset();
         document.getElementById('add-book-form').click();
-        // add a success popup message
+        
+        this.toastr.success('Successfully Added New Book!', 'Add New Book')
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -75,8 +80,10 @@ export class AppComponent implements OnInit {
       (response: Book) => {
         console.log(response);
         this.getBooks();
-        this.addNewBookForm.reset();
-        //document.getElementById('add-book-form').click();
+        this.editBookForm.reset();
+        document.getElementById('edit-book-form').click();
+
+        this.toastr.success('Successfully Updated Book!', 'Edit Book')
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -84,11 +91,42 @@ export class AppComponent implements OnInit {
     );
   }
 
+  public onDeleteBook(id: number): void {
+    this.bookService.deleteBook(id).subscribe(
+      (response: void) => {
+        console.log(response);
+        document.getElementById('delete-book-form').click();
+        this.toastr.success('Successfully Deleted Book!', 'Delete Book')
+        this.getBooks();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
   public resetForm(addForm: FormGroup): void {
       addForm.reset();
-   }
+  }
 
+  public searchBooks(key: string): void {
+    console.log(key);
+    const results: Book[] = [];
+    for(const book of this.books) {
+      if(book.bookName.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || book.authorLastName.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || book.authorFirstName.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || book.isbn.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || book.genre.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        results.push(book);
+      }
+    }
+    this.books = results;
+    // if the user search is not found or they didn't enter anything, show everything
+    if(results.length === 0 || !key) {
+      this.getBooks();
+    }
+  }
 
   public onOpenModal(book: Book, mode: string): void {
     const container = document.getElementById('main-container');
@@ -103,10 +141,14 @@ export class AppComponent implements OnInit {
       this.editBook = book;
       console.log('Book selected for edit -> \n');
       console.log(this.editBook);
+      this.editBookName = this.editBook.bookName;
       this.setValue();
       button.setAttribute('data-target', '#editBookModal');
     }
     if(mode === 'delete') {
+      this.deleteBook = book;
+      console.log(this.deleteBook);
+      this.deleteBookName = this.deleteBook.bookName;
       button.setAttribute('data-target', '#deleteBookModal');
     }
     container.appendChild(button);
@@ -115,6 +157,7 @@ export class AppComponent implements OnInit {
 
   private setValue(): void {
     this.editBookForm.setValue({
+      id: this.editBook.id,
       bookName: this.editBook.bookName,
       authorLastName: this.editBook.authorLastName,
       authorFirstName: this.editBook.authorFirstName,
@@ -124,28 +167,6 @@ export class AppComponent implements OnInit {
       numInStock: this.editBook.numInStock,
       imagePath: this.editBook.imagePath
     });
-
   }
-
-
-
-  // trying to add white spaces so the ISBN can be centerd, don't know how to send that info over
-  // public modifyGenreSpace(): void {
-  //   this.bookService.getBooks()
-  //   .subscribe((response: Book[]) => {
-  //     var temp = response;
-  //     for(let i = 0; i < temp.length; i++) {
-  //       console.log(i + " -- " + temp[i].genre + " -- " + temp[i].genre.length);
-
-  //       var maxLenght = 12;
-  //       if(temp[i].genre.length < maxLenght) {
-  //         var diff = 12 - temp[i].genre.length;
-  //         console.log("Diff - " + diff);
-  //         var newLength = temp[i].genre.length + diff;
-  //         console.log("newLenght - " + newLength);
-  //       }
-  //     }
-  //   })
-  // }
 
 }
