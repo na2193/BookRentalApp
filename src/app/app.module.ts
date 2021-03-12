@@ -8,11 +8,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { LoginComponent } from './Login/login/login.component';
+import { AdminComponent } from './Admin/admin/admin.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    AdminComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
